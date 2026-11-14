@@ -114,8 +114,9 @@
   const toTop = $("#toTop");
   const heroMark = $("#heroMark");
   const parallaxEls = $$(".parallax");
-  const servicesBg = $(".services__bg span");
-  const services = $(".services");
+  const ghostWords = $$(".services__bg span").map((el) => ({
+    el, sec: el.closest("section"), dir: el.parentElement.classList.contains("services__bg--rev") ? -1 : 1,
+  }));
   let lastY = window.scrollY;
   let ticking = false;
   let mouseX = 0, mouseY = 0;
@@ -143,12 +144,12 @@
         const center = r.top + r.height / 2 - innerHeight / 2;
         el.style.setProperty("--py", `${-center * parseFloat(el.dataset.speed || 0.1) - r.height * 0.08}px`);
       });
-      if (servicesBg) {
-        const r = services.getBoundingClientRect();
+      ghostWords.forEach(({ el, sec, dir }) => {
+        const r = sec.getBoundingClientRect();
         if (r.bottom > 0 && r.top < innerHeight) {
-          servicesBg.style.setProperty("--sx", `${(r.top - innerHeight / 2) * 0.4}px`);
+          el.style.setProperty("--sx", `${(r.top - innerHeight / 2) * 0.4 * dir}px`);
         }
-      }
+      });
     }
     ticking = false;
   }

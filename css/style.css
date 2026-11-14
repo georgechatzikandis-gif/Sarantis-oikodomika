@@ -27,7 +27,7 @@
   --onY: #0a0a0a;
   --hair: rgba(255,255,255,.06);
   --grid-line: rgba(255,255,255,.035);
-  --glass: rgba(10,10,10,.82);
+  --glass: rgba(10,10,10,.9);
   --hero-c: #17171a;
   --stroke-faint: rgba(255,255,255,.05);
   --shadow: var(--shadow);
@@ -47,7 +47,7 @@
   --white: #0a0a0a;
   --hair: rgba(0,0,0,.08);
   --grid-line: rgba(0,0,0,.06);
-  --glass: rgba(243,242,238,.85);
+  --glass: rgba(243,242,238,.93);
   --hero-c: #ffffff;
   --stroke-faint: rgba(0,0,0,.06);
   --shadow: rgba(0,0,0,.14);
@@ -817,3 +817,37 @@ a.info__val:hover { color: var(--yellow); }
   .theme-toggle { width: 42px; height: 42px; position: relative; z-index: 120; margin-left: auto; }
   .nav { margin-left: 0; }
 }
+
+/* ---------- Hero background video (shown unfiltered) ---------- */
+.hero { background: #000; --hero-ink: #fff; --hero-shadow: 0 2px 2px rgba(0,0,0,.6), 0 3px 14px rgba(0,0,0,.55), 0 8px 40px rgba(0,0,0,.45); }
+/* hero text stays white over the video in both themes for legibility; the logo mark follows the theme */
+[data-theme="light"] .hero .mark--hero .pc:not(.y) { fill: #0a0a0a; }
+/* header is a solid bar so the menu reads over the video */
+.header { background: var(--glass); border-bottom-color: var(--hair); }
+.hero__video {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover;
+}
+.hero__title, .hero__sub, .hero__tag, .hero__tag em, .scroll-hint { color: var(--hero-ink); text-shadow: var(--hero-shadow); }
+.hero__est { color: var(--yellow) !important; text-shadow: 0 2px 4px rgba(0,0,0,.7), 0 0 18px rgba(0,0,0,.5); }
+.hero__tag { font-weight: 600; }
+.hero .mark--hero .pc:not(.y) { fill: var(--hero-ink); }
+.hero .mark--hero { filter: drop-shadow(0 4px 18px rgba(0,0,0,.55)); }
+[data-theme="light"] .hero .mark--hero { filter: drop-shadow(0 2px 14px rgba(255,255,255,.95)); }
+.hero .btn--ghost { background: var(--black); border-color: var(--black); }
+.hero .btn--ghost:hover { border-color: var(--white); }
+.scroll-hint__mouse { border-color: var(--hero-ink); }
+
+.video-toggle {
+  position: absolute; right: var(--gutter); bottom: 34px; z-index: 3;
+  width: 44px; height: 44px; padding: 0; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer;
+  background: var(--black); color: var(--white); border: 1.5px solid var(--grey-800);
+  transition: transform .3s var(--ease), border-color .3s;
+}
+.video-toggle:hover { border-color: var(--yellow); transform: scale(1.08); }
+.video-toggle svg { width: 18px; height: 18px; fill: currentColor; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.video-toggle__play { display: none; }
+.video-toggle.is-paused .video-toggle__play { display: block; }
+.video-toggle.is-paused .video-toggle__pause { display: none; }
+@media (max-width: 560px) { .video-toggle { bottom: 22px; width: 40px; height: 40px; } }

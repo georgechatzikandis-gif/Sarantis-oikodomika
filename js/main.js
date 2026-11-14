@@ -407,6 +407,29 @@
     }
   });
 
+  /* ---------- Hero video ---------- */
+  const video = $("#heroVideo");
+  const vBtn = $("#videoToggle");
+  if (video && vBtn) {
+    const setBtn = () => {
+      vBtn.classList.toggle("is-paused", video.paused);
+      vBtn.setAttribute("aria-label", video.paused ? "Αναπαραγωγή βίντεο" : "Παύση βίντεο");
+    };
+    if (reduceMotion) { video.removeAttribute("autoplay"); video.pause(); }
+    else { const pr = video.play(); if (pr && pr.catch) pr.catch(() => {}); }
+    video.addEventListener("play", setBtn);
+    video.addEventListener("pause", setBtn);
+    vBtn.addEventListener("click", () => { video.paused ? video.play() : video.pause(); });
+    // save battery: pause when the hero is off-screen
+    let userPaused = false;
+    vBtn.addEventListener("click", () => { userPaused = video.paused; });
+    new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) video.pause();
+      else if (!userPaused && !reduceMotion) video.play().catch(() => {});
+    }, { threshold: 0.05 }).observe(video);
+    setBtn();
+  }
+
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();
 })();

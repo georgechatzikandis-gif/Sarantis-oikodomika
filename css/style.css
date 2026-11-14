@@ -480,7 +480,7 @@ a { color: inherit; text-decoration: none; }
 .step:hover::after { width: 100%; }
 .step__n {
   flex: none; font-size: 54px; font-weight: 900; line-height: .9;
-  color: var(--grey-800);
+  color: var(--white);
   transition: color .4s, transform .5s var(--ease);
 }
 .step:hover .step__n { color: var(--yellow); transform: translateY(-4px); }

@@ -949,6 +949,43 @@ a.info__val:hover { color: var(--yellow); }
   .hours-card__scale { padding-left: calc(6px + 74px + 10px); padding-right: calc(6px + 92px + 10px); }
 }
 
+
+/* ---------- Opening hours: full-width version ---------- */
+.hours-wrap { margin-top: clamp(50px, 7vw, 90px); }
+.hours-card--wide { margin-top: 0; padding: clamp(24px, 3.5vw, 44px); border-radius: 16px; }
+.hours-card--wide::before { width: 6px; }
+.hours-card--wide .hours-card__head { gap: clamp(16px, 2vw, 26px); }
+.hours-card--wide .hclock { width: clamp(64px, 7vw, 92px); height: clamp(64px, 7vw, 92px); }
+.hours-card--wide .hours-card__title .info__lbl { font-size: 13px; }
+.hours-card--wide .hours-card__title strong { font-size: clamp(22px, 2.6vw, 34px); font-weight: 800; line-height: 1.15; margin-top: 4px; }
+.hours-card--wide .hstatus { font-size: clamp(13px, 1.3vw, 16px); padding: 14px 24px 14px 20px; gap: 12px; }
+.hours-card--wide .hstatus__dot { width: 12px; height: 12px; }
+.hours-card--wide .hours-card__note { font-size: clamp(16px, 1.6vw, 20px); margin: 22px 0 18px; }
+.hours-card--wide .hours-list { gap: 6px; margin-top: 0; }
+.hours-card--wide .hrow { grid-template-columns: 170px 1fr 190px; gap: 26px; padding: 14px 18px; border-radius: 10px; font-size: clamp(16px, 1.5vw, 19px); }
+.hours-card--wide .hrow__bar { height: 14px; border-radius: 14px;
+  background-image: repeating-linear-gradient(90deg, transparent 0 calc(25% - 1px), var(--grey-600) calc(25% - 1px) 25%);
+  background-color: var(--grey-800); }
+.hours-card--wide .hrow__fill { border-radius: 14px; box-shadow: 0 0 14px rgba(34,197,94,.35); }
+.hours-card--wide .is-closed-day .hrow__bar { background: repeating-linear-gradient(-45deg, rgba(239,68,68,.4) 0 8px, transparent 8px 16px); }
+.hours-card--wide .hrow__now { width: 4px; margin-left: -2px; top: -6px; bottom: -6px; }
+.hours-card--wide .hrow__time { font-size: clamp(17px, 1.7vw, 22px); }
+.hours-card--wide .hrow.is-today .hrow__day::after { font-size: 11px; }
+.hours-card--wide .hours-card__scale { padding: 8px calc(18px + 190px + 26px) 0 calc(18px + 170px + 26px); }
+.hours-card--wide .hours-card__scale span { font-size: 12px; }
+.hours-card--wide .hrow:hover { transform: translateX(6px); }
+
+@media (max-width: 760px) {
+  .hours-card--wide .hrow { grid-template-columns: 1fr auto; grid-template-areas: "day time" "bar bar"; gap: 10px 14px; padding: 12px 12px; }
+  .hours-card--wide .hrow__day { grid-area: day; }
+  .hours-card--wide .hrow__time { grid-area: time; }
+  .hours-card--wide .hrow__bar { grid-area: bar; height: 10px; }
+  .hours-card--wide .hrow.is-today .hrow__day::after { display: inline; margin-left: 8px; }
+  .hours-card--wide .hours-card__scale { padding: 6px 12px 0; }
+  .hours-card--wide .hstatus { width: 100%; justify-content: center; }
+  .hours-card--wide .hrow:hover { transform: none; }
+}
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; transition-delay: 0s !important; }

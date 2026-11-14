@@ -55,7 +55,7 @@
       <a href="#products" class="nav__link"><span>Προϊόντα</span></a>
       <a href="#services" class="nav__link"><span>Υπηρεσίες</span></a>
       <a href="#contact" class="nav__link"><span>Επικοινωνία</span></a>
-      <a href="#contact" class="btn btn--yellow btn--sm magnetic nav__cta">Ζητήστε προσφορά</a>
+      <a href="#contact" class="btn btn--yellow btn--sm magnetic ripple nav__cta">Ζητήστε προσφορά</a>
     </nav>
     <button class="burger" id="burger" aria-label="Άνοιγμα μενού" aria-expanded="false" aria-controls="nav">
       <span></span><span></span><span></span>
@@ -97,9 +97,9 @@
         <p class="hero__sub"><span class="split split--thin" data-split>ΟΙΚΟΔΟΜΙΚΑ ΥΛΙΚΑ</span></p>
         <p class="hero__tag reveal-up">Ό,τι χρειάζεται το έργο σας, <em>κάτω από μία στέγη.</em></p>
         <div class="hero__ctas reveal-up">
-          <a href="#products" class="btn btn--yellow magnetic"><span>Δείτε τα προϊόντα</span>
+          <a href="#products" class="btn btn--yellow magnetic ripple"><span>Δείτε τα προϊόντα</span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a href="#contact" class="btn btn--ghost magnetic"><span>Επικοινωνία</span></a>
+          <a href="#contact" class="btn btn--ghost magnetic ripple"><span>Επικοινωνία</span></a>
         </div>
       </div>
 
@@ -255,7 +255,7 @@
       <div class="cta__stripes" aria-hidden="true"></div>
       <div class="container cta__inner">
         <h2 class="cta__title reveal-up">Έχετε έργο;<br>Ας το χτίσουμε μαζί.</h2>
-        <a href="#contact" class="btn btn--dark magnetic reveal-up"><span>Ζητήστε προσφορά</span>
+        <a href="#contact" class="btn btn--dark magnetic ripple reveal-up"><span>Ζητήστε προσφορά</span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </section>
@@ -267,24 +267,30 @@
           <p class="eyebrow reveal-up">Επικοινωνία</p>
           <h2 class="h2 reveal-up">Ελάτε να <span class="hl">μας γνωρίσετε.</span></h2>
 
-          <ul class="info">
-            <li class="info__item reveal-up">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
-              <div><span class="info__lbl">Διεύθυνση</span><span class="info__val">[Οδός &amp; αριθμός], [Πόλη] [Τ.Κ.]</span></div>
-            </li>
-            <li class="info__item reveal-up">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
-              <div><span class="info__lbl">Τηλέφωνο</span><a class="info__val" href="tel:+300000000000">[+30 000 000 0000]</a></div>
-            </li>
-            <li class="info__item reveal-up">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-              <div><span class="info__lbl">Email</span><a class="info__val" href="mailto:info@example.com">[info@example.com]</a></div>
-            </li>
-            <li class="info__item reveal-up">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-              <div><span class="info__lbl">Ωράριο</span><span class="info__val">Δευ–Παρ [07:30–15:30] · Σάβ [08:00–14:00]</span></div>
-            </li>
-          </ul>
+          <p class="lead reveal-up contact__lead">Είμαστε στην <strong>Ιαλυσό Ρόδου</strong>, πίσω από το λύκειο. Πατήστε για κλήση, email ή οδηγίες.</p>
+
+          <div class="actions">
+            <a class="act act--call ripple reveal-up" href="tel:+302241092790" aria-label="Κλήση στο 22410 92790">
+              <span class="act__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><i class="act__wave"></i><i class="act__wave act__wave--2"></i></span>
+              <span class="act__txt"><span class="act__lbl">Καλέστε μας</span><span class="act__val">22410 92790</span></span>
+              <svg class="act__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="act act--mail ripple reveal-up" href="mailto:sarantis1985@hotmail.com" aria-label="Email στο sarantis1985@hotmail.com">
+              <span class="act__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path class="act__flap" d="M3 7l9 6 9-6"/></svg></span>
+              <span class="act__txt"><span class="act__lbl">Στείλτε email</span><span class="act__val">sarantis1985@hotmail.com</span></span>
+              <svg class="act__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="act act--map ripple reveal-up" href="https://www.google.com/maps/dir/?api=1&amp;destination=%CE%A3%CE%B1%CF%81%CE%AC%CE%BD%CF%84%CE%B7%CF%82%20%CE%9F%CE%B9%CE%BA%CE%BF%CE%B4%CE%BF%CE%BC%CE%B9%CE%BA%CE%AC%20%CE%A5%CE%BB%CE%B9%CE%BA%CE%AC%2C%20%CE%91%CE%B3%CE%AF%CE%BF%CF%85%20%CE%99%CF%89%CE%AC%CE%BD%CE%BD%CE%BF%CF%85%2C%20%CE%99%CE%B1%CE%BB%CF%85%CF%83%CF%8C%CF%82%2C%20%CE%A1%CF%8C%CE%B4%CE%BF%CF%82" target="_blank" rel="noopener" aria-label="Οδηγίες στο Google Maps (ανοίγει νέα καρτέλα)">
+              <span class="act__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><i class="act__shadow"></i></span>
+              <span class="act__txt"><span class="act__lbl">Οδηγίες χάρτη</span><span class="act__val">Αγίου Ιωάννου, Ιαλυσός<small>(πίσω από το λύκειο)</small></span></span>
+              <svg class="act__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+
+          <p class="hours reveal-up">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span><span class="info__lbl">Ωράριο</span>Δευ–Παρ [07:30–15:30] · Σάβ [08:00–14:00]</span>
+          </p>
         </div>
 
         <form class="form reveal-up" id="contactForm" novalidate>
@@ -293,13 +299,35 @@
           <div class="field"><input id="f-phone" name="phone" type="tel" placeholder=" " required><label for="f-phone">Τηλέφωνο</label></div>
           <div class="field"><input id="f-email" name="email" type="email" placeholder=" "><label for="f-email">Email</label></div>
           <div class="field"><textarea id="f-msg" name="message" rows="4" placeholder=" " required></textarea><label for="f-msg">Τι χρειάζεστε;</label></div>
-          <button type="submit" class="btn btn--yellow btn--block magnetic"><span>Αποστολή</span>
+          <button type="submit" class="btn btn--yellow btn--block magnetic ripple"><span>Αποστολή</span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
           <p class="form__note" id="formNote" role="status" aria-live="polite"></p>
         </form>
       </div>
+
+      <div class="container">
+        <div class="map reveal-up">
+          <iframe class="map__frame" title="Χάρτης — Σαράντης Οικοδομικά Υλικά, Ιαλυσός" src="https://maps.google.com/maps?q=%CE%A3%CE%B1%CF%81%CE%AC%CE%BD%CF%84%CE%B7%CF%82%20%CE%9F%CE%B9%CE%BA%CE%BF%CE%B4%CE%BF%CE%BC%CE%B9%CE%BA%CE%AC%20%CE%A5%CE%BB%CE%B9%CE%BA%CE%AC%2C%20%CE%91%CE%B3%CE%AF%CE%BF%CF%85%20%CE%99%CF%89%CE%AC%CE%BD%CE%BD%CE%BF%CF%85%2C%20%CE%99%CE%B1%CE%BB%CF%85%CF%83%CF%8C%CF%82%2C%20%CE%A1%CF%8C%CE%B4%CE%BF%CF%82&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="-1"></iframe>
+          <div class="map__card">
+            <img src="assets/mark.svg" alt="" width="46" height="46">
+            <div>
+              <strong>ΣΑΡΑΝΤΗΣ</strong>
+              <span>Αγίου Ιωάννου, Ιαλυσός<br>(πίσω από το λύκειο)</span>
+            </div>
+            <a class="btn btn--yellow btn--sm ripple" href="https://www.google.com/maps/dir/?api=1&amp;destination=%CE%A3%CE%B1%CF%81%CE%AC%CE%BD%CF%84%CE%B7%CF%82%20%CE%9F%CE%B9%CE%BA%CE%BF%CE%B4%CE%BF%CE%BC%CE%B9%CE%BA%CE%AC%20%CE%A5%CE%BB%CE%B9%CE%BA%CE%AC%2C%20%CE%91%CE%B3%CE%AF%CE%BF%CF%85%20%CE%99%CF%89%CE%AC%CE%BD%CE%BD%CE%BF%CF%85%2C%20%CE%99%CE%B1%CE%BB%CF%85%CF%83%CF%8C%CF%82%2C%20%CE%A1%CF%8C%CE%B4%CE%BF%CF%82" target="_blank" rel="noopener"><span>Οδηγίες</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
+
+  <!-- ===== Mobile quick actions ===== -->
+  <nav class="dock" id="dock" aria-label="Γρήγορη επικοινωνία">
+    <a class="dock__btn ripple" href="tel:+302241092790"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>Κλήση</span></a>
+    <a class="dock__btn ripple" href="mailto:sarantis1985@hotmail.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span>Email</span></a>
+    <a class="dock__btn dock__btn--main ripple" href="https://www.google.com/maps/dir/?api=1&amp;destination=%CE%A3%CE%B1%CF%81%CE%AC%CE%BD%CF%84%CE%B7%CF%82%20%CE%9F%CE%B9%CE%BA%CE%BF%CE%B4%CE%BF%CE%BC%CE%B9%CE%BA%CE%AC%20%CE%A5%CE%BB%CE%B9%CE%BA%CE%AC%2C%20%CE%91%CE%B3%CE%AF%CE%BF%CF%85%20%CE%99%CF%89%CE%AC%CE%BD%CE%BD%CE%BF%CF%85%2C%20%CE%99%CE%B1%CE%BB%CF%85%CF%83%CF%8C%CF%82%2C%20%CE%A1%CF%8C%CE%B4%CE%BF%CF%82" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Οδηγίες</span></a>
+  </nav>
 
   <!-- ===== Footer ===== -->
   <footer class="footer">
@@ -311,6 +339,7 @@
       <nav class="footer__nav" aria-label="Μενού υποσέλιδου">
         <a href="#about">Η Εταιρεία</a><a href="#products">Προϊόντα</a><a href="#services">Υπηρεσίες</a><a href="#contact">Επικοινωνία</a>
       </nav>
+      <p class="footer__contact"><a href="tel:+302241092790">22410 92790</a> · <a href="mailto:sarantis1985@hotmail.com">sarantis1985@hotmail.com</a> · Αγίου Ιωάννου, Ιαλυσός</p>
       <p class="footer__copy">© <span id="year">2026</span> Σαράντης Οικοδομικά Υλικά · EST. 2007</p>
     </div>
     <button class="to-top magnetic" id="toTop" aria-label="Επιστροφή στην κορυφή">

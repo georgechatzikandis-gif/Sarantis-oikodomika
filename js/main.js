@@ -333,7 +333,7 @@
     });
     if (!ok) { note.textContent = "Συμπληρώστε τα υποχρεωτικά πεδία."; return; }
     const data = new FormData(form);
-    const to = ($(".info a[href^='mailto:']") || {}).getAttribute?.("href")?.replace("mailto:", "") || "";
+    const to = ($(".act--mail") || {}).getAttribute?.("href")?.replace("mailto:", "") || "";
     const subject = `Αίτημα από ${data.get("name")}`;
     const bodyTxt = `Όνομα: ${data.get("name")}\nΤηλέφωνο: ${data.get("phone")}\nEmail: ${data.get("email")}\n\n${data.get("message")}`;
     window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyTxt)}`;
@@ -341,6 +341,33 @@
     form.reset();
   });
   $$("input, textarea", form).forEach((f) => f.addEventListener("input", () => f.parentElement.classList.remove("is-invalid")));
+
+  /* ---------- Ripple + press feedback (mouse & touch) ---------- */
+  $$(".ripple").forEach((el) => {
+    el.addEventListener("pointerdown", (e) => {
+      const r = el.getBoundingClientRect();
+      const w = document.createElement("span");
+      w.className = "ripple__wave";
+      w.style.left = e.clientX - r.left + "px";
+      w.style.top = e.clientY - r.top + "px";
+      w.style.setProperty("--rs", Math.ceil(Math.hypot(r.width, r.height) / 10));
+      el.appendChild(w);
+      w.addEventListener("animationend", () => w.remove());
+      el.classList.remove("is-pressed");
+      void el.offsetWidth; // restart icon animations
+      el.classList.add("is-pressed");
+      clearTimeout(el._pt);
+      el._pt = setTimeout(() => el.classList.remove("is-pressed"), 900);
+    });
+  });
+
+  /* ---------- Mobile dock: show after the hero ---------- */
+  const dock = $("#dock");
+  if (dock) {
+    const showDock = () => dock.classList.toggle("is-visible", window.scrollY > innerHeight * 0.6);
+    window.addEventListener("scroll", showDock, { passive: true });
+    showDock();
+  }
 
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();

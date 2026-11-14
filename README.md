@@ -9,5 +9,5 @@ Animated one-page website (static HTML/CSS/JS, no build step). Open `index.html`
 - `assets/` — logo mark (`mark.svg`), original logo (`logo.png`), storefront photos
 
 ## To fill in
-Search `index.html` for text in `[brackets]` — address, phone, email and opening hours are placeholders.
+Opening hours in `index.html` are still a placeholder in `[brackets]`.
 The contact form opens the visitor's email app addressed to the email in the contact section.

@@ -434,6 +434,93 @@
     moveBgs();
   }
 
+  /* ---------- Partners carousel (3D coverflow) ---------- */
+  const pc = $("#pcarousel");
+  if (pc) {
+    const slides = $$(".pc-slide", pc);
+    const dots = $$(".pc-dot");
+    const dotsWrap = $(".pc-dots");
+    const live = $("#pcLive");
+    const n = slides.length;
+    const DUR = 3500;
+    let cur = 0, timer = null, hovering = false, visible = false, dragX = null, dragDX = 0;
+    document.documentElement.style.setProperty("--pc-dur", DUR + "ms");
+
+    const wrap = (d) => { d = ((d % n) + n) % n; return d > n / 2 ? d - n : d; };
+    function render(extra = 0) {
+      slides.forEach((s, i) => {
+        const d = wrap(i - cur) + extra;
+        const ad = Math.min(Math.abs(d), 3);
+        s.style.setProperty("--d", d);
+        s.style.setProperty("--ad", ad);
+        s.style.setProperty("--z", 100 - Math.round(ad * 10));
+        s.style.setProperty("--op", ad > 2.2 ? 0 : 1 - ad * 0.18);
+        s.classList.toggle("is-active", i === cur);
+        s.setAttribute("aria-hidden", i === cur ? "false" : "true");
+      });
+      dots.forEach((d, i) => {
+        d.classList.remove("is-active");
+        if (i === cur) { void d.offsetWidth; d.classList.add("is-active"); }
+        d.setAttribute("aria-current", i === cur ? "true" : "false");
+      });
+    }
+    function go(i, announce) {
+      cur = ((i % n) + n) % n;
+      render();
+      if (announce) live.textContent = slides[cur].querySelector("figcaption").textContent;
+      restart();
+    }
+    function restart() {
+      clearInterval(timer);
+      const auto = !reduceMotion && visible && !hovering;
+      pc.classList.toggle("is-paused", !auto);
+      dotsWrap.classList.toggle("no-auto", reduceMotion);
+      if (auto) timer = setInterval(() => go(cur + 1), DUR);
+    }
+
+    $(".pc-arrow--prev", pc).addEventListener("click", () => go(cur - 1, true));
+    $(".pc-arrow--next", pc).addEventListener("click", () => go(cur + 1, true));
+    dots.forEach((d) => d.addEventListener("click", () => go(+d.dataset.go, true)));
+    slides.forEach((s, i) => s.addEventListener("click", () => { if (Math.abs(dragDX) < 6 && i !== cur) go(i, true); }));
+    pc.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1, true); }
+      if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1, true); }
+    });
+    if (finePointer) {
+      pc.addEventListener("mouseenter", () => { hovering = true; restart(); });
+      pc.addEventListener("mouseleave", () => { hovering = false; restart(); });
+    }
+
+    // drag / swipe
+    pc.addEventListener("pointerdown", (e) => {
+      if (e.target.closest(".pc-arrow")) return;
+      dragX = e.clientX; dragDX = 0;
+      pc.setPointerCapture(e.pointerId);
+    });
+    pc.addEventListener("pointermove", (e) => {
+      if (dragX === null) return;
+      dragDX = e.clientX - dragX;
+      if (Math.abs(dragDX) > 6) {
+        pc.classList.add("is-dragging");
+        render(dragDX / (slides[0].offsetWidth * 0.6));
+      }
+    });
+    const endDrag = () => {
+      if (dragX === null) return;
+      pc.classList.remove("is-dragging");
+      const w = slides[0].offsetWidth * 0.6;
+      const steps = Math.round(-dragDX / w) || (Math.abs(dragDX) > 50 ? -Math.sign(dragDX) : 0);
+      dragX = null;
+      if (steps) go(cur + steps, true); else render();
+      setTimeout(() => { dragDX = 0; }, 0);
+    };
+    pc.addEventListener("pointerup", endDrag);
+    pc.addEventListener("pointercancel", endDrag);
+
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; restart(); }, { threshold: 0.3 }).observe(pc);
+    render();
+  }
+
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();
 })();

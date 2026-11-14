@@ -430,6 +430,25 @@
     setBtn();
   }
 
+  /* ---------- Section photo parallax ---------- */
+  const secBgs = $$(".sec-bg img");
+  if (secBgs.length && !reduceMotion) {
+    let bgTick = false;
+    const moveBgs = () => {
+      secBgs.forEach((img) => {
+        const r = img.parentElement.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > innerHeight + 100) return;
+        const off = (r.top + r.height / 2 - innerHeight / 2) * -0.12;
+        const lim = r.height * 0.09;
+        img.style.setProperty("--bgy", Math.max(-lim, Math.min(lim, off)) + "px");
+      });
+      bgTick = false;
+    };
+    window.addEventListener("scroll", () => { if (!bgTick) { bgTick = true; requestAnimationFrame(moveBgs); } }, { passive: true });
+    window.addEventListener("resize", moveBgs);
+    moveBgs();
+  }
+
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();
 })();

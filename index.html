@@ -21,6 +21,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HardwareStore",
+    "name": "Σαράντης Οικοδομικά Υλικά",
+    "telephone": "+30 22410 92790",
+    "email": "sarantis1985@hotmail.com",
+    "foundingDate": "2007",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Λεωφ. Ελευθερίας 1Α",
+      "addressLocality": "Κρεμαστή",
+      "postalCode": "851 04",
+      "addressRegion": "Ρόδος",
+      "addressCountry": "GR"
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "18:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "07:00", "closes": "16:00" }
+    ]
+  }
+  </script>
 </head>
 <body class="is-loading">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -385,10 +407,63 @@
             </a>
           </div>
 
-          <p class="hours reveal-up">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-            <span><span class="info__lbl">Ωράριο</span>Δευ–Παρ [07:30–15:30] · Σάβ [08:00–14:00]</span>
-          </p>
+          <div class="hours-card reveal-up" id="hoursCard">
+            <div class="hours-card__head">
+              <svg class="hclock" viewBox="0 0 48 48" aria-hidden="true">
+                <circle class="hclock__face" cx="24" cy="24" r="21"/>
+                <g class="hclock__ticks"><path d="M24 6v4M24 38v4M6 24h4M38 24h4"/></g>
+                <line class="hclock__h" id="clockH" x1="24" y1="24" x2="24" y2="14"/>
+                <line class="hclock__m" id="clockM" x1="24" y1="24" x2="24" y2="9"/>
+                <circle cx="24" cy="24" r="2.4" class="hclock__pin"/>
+              </svg>
+              <div class="hours-card__title">
+                <span class="info__lbl">Ωράριο λειτουργίας</span>
+                <strong>Δευ–Παρ 07–18 · Σάβ 07–16</strong>
+              </div>
+              <span class="hstatus" id="hoursStatus" role="status" aria-live="polite">
+                <i class="hstatus__dot"></i><span class="hstatus__txt">—</span>
+              </span>
+            </div>
+            <p class="hours-card__note" id="hoursNote"></p>
+            <ul class="hours-list" aria-label="Ωράριο ανά ημέρα">
+              <li class="hrow" data-day="1" data-open="420" data-close="1080" style="--i:0">
+                <span class="hrow__day">Δευτέρα</span>
+                <span class="hrow__bar"><span class="hrow__fill" style="--l:29.167%;--w:45.833%"></span><span class="hrow__now"></span></span>
+                <span class="hrow__time">07:00 – 18:00</span>
+              </li>
+              <li class="hrow" data-day="2" data-open="420" data-close="1080" style="--i:1">
+                <span class="hrow__day">Τρίτη</span>
+                <span class="hrow__bar"><span class="hrow__fill" style="--l:29.167%;--w:45.833%"></span><span class="hrow__now"></span></span>
+                <span class="hrow__time">07:00 – 18:00</span>
+              </li>
+              <li class="hrow" data-day="3" data-open="420" data-close="1080" style="--i:2">
+                <span class="hrow__day">Τετάρτη</span>
+                <span class="hrow__bar"><span class="hrow__fill" style="--l:29.167%;--w:45.833%"></span><span class="hrow__now"></span></span>
+                <span class="hrow__time">07:00 – 18:00</span>
+              </li>
+              <li class="hrow" data-day="4" data-open="420" data-close="1080" style="--i:3">
+                <span class="hrow__day">Πέμπτη</span>
+                <span class="hrow__bar"><span class="hrow__fill" style="--l:29.167%;--w:45.833%"></span><span class="hrow__now"></span></span>
+                <span class="hrow__time">07:00 – 18:00</span>
+              </li>
+              <li class="hrow" data-day="5" data-open="420" data-close="1080" style="--i:4">
+                <span class="hrow__day">Παρασκευή</span>
+                <span class="hrow__bar"><span class="hrow__fill" style="--l:29.167%;--w:45.833%"></span><span class="hrow__now"></span></span>
+                <span class="hrow__time">07:00 – 18:00</span>
+              </li>
+              <li class="hrow" data-day="6" data-open="420" data-close="960" style="--i:5">
+                <span class="hrow__day">Σάββατο</span>
+                <span class="hrow__bar"><span class="hrow__fill" style="--l:29.167%;--w:37.500%"></span><span class="hrow__now"></span></span>
+                <span class="hrow__time">07:00 – 16:00</span>
+              </li>
+              <li class="hrow is-closed-day" data-day="7" style="--i:6">
+                <span class="hrow__day">Κυριακή</span>
+                <span class="hrow__bar"><span class="hrow__now"></span></span>
+                <span class="hrow__time">Κλειστά</span>
+              </li>
+            </ul>
+            <div class="hours-card__scale" aria-hidden="true"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+          </div>
         </div>
 
         <form class="form reveal-up" id="contactForm" novalidate>

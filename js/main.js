@@ -521,6 +521,75 @@
     render();
   }
 
+  /* ---------- Opening hours: live open / closed (Rhodes time) ---------- */
+  const hoursCard = $("#hoursCard");
+  if (hoursCard) {
+    const rows = $$(".hrow", hoursCard);
+    const statusEl = $("#hoursStatus");
+    const statusTxt = $(".hstatus__txt", statusEl);
+    const note = $("#hoursNote");
+    const DAY_GEN = ["", "Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββατο", "Κυριακή"];
+    const sched = {};
+    rows.forEach((r) => {
+      sched[r.dataset.day] = r.dataset.open ? { o: +r.dataset.open, c: +r.dataset.close } : null;
+    });
+    const fmt = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
+    const dur = (m) => {
+      const h = Math.floor(m / 60), mm = m % 60;
+      if (h && mm) return `${h} ${h === 1 ? "ώρα" : "ώρες"} και ${mm}′`;
+      if (h) return `${h} ${h === 1 ? "ώρα" : "ώρες"}`;
+      return `${mm}′`;
+    };
+    function athensNow() {
+      const parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Europe/Athens", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+      }).formatToParts(new Date());
+      const get = (t) => parts.find((p) => p.type === t).value;
+      const day = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }[get("weekday")];
+      return { day, min: (+get("hour") % 24) * 60 + +get("minute") };
+    }
+    let lastState = null;
+    function updateHours() {
+      const { day, min } = athensNow();
+      const t = sched[day];
+      const open = !!t && min >= t.o && min < t.c;
+
+      hoursCard.classList.toggle("is-open", open);
+      hoursCard.classList.toggle("is-closed", !open);
+      const label = open ? "Ανοιχτά τώρα" : "Κλειστά τώρα";
+      if (lastState !== open) {
+        statusTxt.textContent = label;
+        statusEl.classList.remove("is-flip"); void statusEl.offsetWidth; statusEl.classList.add("is-flip");
+        lastState = open;
+      }
+
+      if (open) {
+        note.innerHTML = `Κλείνει σε <b>${dur(t.c - min)}</b> (στις ${fmt(t.c)})`;
+      } else if (t && min < t.o) {
+        note.innerHTML = `Ανοίγει σήμερα σε <b>${dur(t.o - min)}</b> (στις ${fmt(t.o)})`;
+      } else {
+        let d = day, k = 0;
+        do { d = d % 7 + 1; k++; } while (!sched[d] && k < 7);
+        const when = k === 1 ? "αύριο" : DAY_GEN[d];
+        note.innerHTML = `Ανοίγει <b>${when}</b> στις ${fmt(sched[d].o)}`;
+      }
+
+      rows.forEach((r) => {
+        const today = +r.dataset.day === day;
+        r.classList.toggle("is-today", today);
+        if (today) r.style.setProperty("--now", (min / 1440) * 100 + "%");
+      });
+
+      // clock hands show the current time in Rhodes
+      const h = Math.floor(min / 60) % 12, m = min % 60;
+      $("#clockH").style.transform = `rotate(${h * 30 + m * 0.5}deg)`;
+      $("#clockM").style.transform = `rotate(${m * 6}deg)`;
+    }
+    updateHours();
+    setInterval(updateHours, 30000);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) updateHours(); });
+  }
+
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();
 })();

@@ -857,6 +857,98 @@ a.info__val:hover { color: var(--yellow); }
   .pc-dots { margin-top: 40px; }
 }
 
+
+/* ---------- Opening hours (live open / closed) ---------- */
+.hours-card {
+  --open: #22c55e; --closed: #ef4444;
+  margin-top: 22px; padding: 22px 22px 16px;
+  background: var(--char); border: 1px solid var(--grey-800); border-radius: 12px;
+  position: relative; overflow: hidden;
+}
+.hours-card::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: var(--state, var(--grey-600)); transition: background .6s;
+}
+.hours-card.is-open { --state: var(--open); }
+.hours-card.is-closed { --state: var(--closed); }
+.hours-card__head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.hours-card__title { flex: 1; min-width: 150px; }
+.hours-card__title strong { display: block; color: var(--white); font-size: 15px; font-weight: 700; }
+
+.hclock { width: 46px; height: 46px; flex: none; }
+.hclock__face { fill: none; stroke: var(--yellow); stroke-width: 2.2; stroke-dasharray: 132; stroke-dashoffset: 132; transition: stroke-dashoffset 1.4s var(--ease); }
+.hours-card.is-in .hclock__face { stroke-dashoffset: 0; }
+.hclock__ticks { stroke: var(--grey-600); stroke-width: 2; stroke-linecap: round; }
+.hclock__h, .hclock__m { stroke: var(--white); stroke-linecap: round; transform-origin: 24px 24px; transition: transform 1.6s var(--ease) .3s; }
+.hclock__h { stroke-width: 3; }
+.hclock__m { stroke-width: 2; stroke: var(--yellow); }
+.hclock__pin { fill: var(--white); }
+
+.hstatus {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 8px 14px 8px 12px; border-radius: 99px;
+  font-size: 12px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase;
+  color: #fff; background: var(--state, var(--grey-600));
+  box-shadow: 0 0 0 0 var(--state);
+  transition: background .6s, transform .5s var(--ease);
+  transform: scale(.6); opacity: 0;
+}
+.hours-card.is-in .hstatus { transform: none; opacity: 1; transition: background .6s, transform .7s var(--ease) .5s, opacity .4s .5s; }
+.hours-card.is-open .hstatus { color: #052e14; }
+.hstatus__dot { position: relative; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.hstatus__dot::before, .hstatus__dot::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; background: currentColor;
+  animation: hPulse 1.8s ease-out infinite;
+}
+.hstatus__dot::after { animation-delay: .9s; }
+.hours-card.is-closed .hstatus__dot::before, .hours-card.is-closed .hstatus__dot::after { animation-duration: 2.8s; }
+@keyframes hPulse { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(3.2); opacity: 0; } }
+.hstatus__txt { display: inline-block; }
+.hstatus.is-flip .hstatus__txt { animation: hFlip .6s var(--ease); }
+@keyframes hFlip { 0% { transform: rotateX(90deg); opacity: 0; } 100% { transform: none; opacity: 1; } }
+
+.hours-card__note { margin: 12px 0 6px; font-size: 14px; font-weight: 600; color: var(--grey-200); min-height: 1.4em; }
+.hours-card__note b { color: var(--state, var(--white)); }
+
+.hours-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 2px; }
+.hrow {
+  display: grid; grid-template-columns: 92px 1fr 104px; align-items: center; gap: 14px;
+  padding: 8px 10px; border-radius: 8px; font-size: 14px;
+  opacity: 0; transform: translateX(-18px);
+  transition: opacity .6s var(--ease), transform .7s var(--ease), background .4s;
+  transition-delay: calc(.25s + var(--i) * 70ms);
+}
+.hours-card.is-in .hrow { opacity: 1; transform: none; }
+.hrow:hover { background: var(--grey-900); }
+.hrow__day { color: var(--grey-200); font-weight: 600; }
+.hrow__time { text-align: right; color: var(--white); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hrow__bar { position: relative; height: 8px; border-radius: 8px; background: var(--grey-800); overflow: hidden; }
+.hrow__fill {
+  position: absolute; top: 0; bottom: 0; left: var(--l); width: var(--w);
+  border-radius: 8px; background: var(--open); opacity: .85;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 1s var(--ease); transition-delay: calc(.45s + var(--i) * 70ms);
+}
+.hours-card.is-in .hrow__fill { transform: scaleX(1); }
+.is-closed-day .hrow__bar { background: repeating-linear-gradient(-45deg, rgba(239,68,68,.35) 0 6px, transparent 6px 12px); }
+.is-closed-day .hrow__time { color: var(--closed); }
+.hrow__now { display: none; position: absolute; top: -3px; bottom: -3px; width: 3px; margin-left: -1.5px; left: var(--now, 0); background: var(--white); border-radius: 2px; box-shadow: 0 0 8px var(--white); }
+.hrow.is-today { background: var(--grey-900); box-shadow: inset 0 0 0 1px var(--state, var(--grey-800)); }
+.hrow.is-today .hrow__day { color: var(--white); font-weight: 800; }
+.hrow.is-today .hrow__day::after { content: "Σήμερα"; display: block; color: var(--yellow); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; line-height: 1.2; }
+.hrow.is-today .hrow__bar { overflow: visible; }
+.hrow.is-today .hrow__now { display: block; animation: hBlink 1.6s ease-in-out infinite; }
+@keyframes hBlink { 50% { opacity: .35; } }
+
+.hours-card__scale { display: flex; justify-content: space-between; padding: 4px calc(10px + 104px + 14px) 0 calc(10px + 92px + 14px); }
+.hours-card__scale span { font-size: 10px; color: var(--grey-600); font-weight: 600; letter-spacing: .05em; }
+
+@media (max-width: 560px) {
+  .hours-card { padding: 18px 14px 14px; }
+  .hrow { grid-template-columns: 74px 1fr 92px; gap: 10px; font-size: 13px; padding: 8px 6px; }
+  .hours-card__scale { padding-left: calc(6px + 74px + 10px); padding-right: calc(6px + 92px + 10px); }
+}
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; transition-delay: 0s !important; }

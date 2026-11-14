@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Σαράντης | Οικοδομικά Υλικά</title>
+  <meta name="description" content="Σαράντης Οικοδομικά Υλικά — τσιμέντα, χρώματα, μονωτικά, πλέγματα, εργαλεία και ό,τι χρειάζεται το έργο σας. Από το 2007.">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <meta property="og:title" content="Σαράντης | Οικοδομικά Υλικά">
+  <meta property="og:description" content="Ό,τι χρειάζεται το έργο σας, κάτω από μια στέγη. Από το 2007.">
+  <meta property="og:image" content="assets/storefront-sm.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="is-loading">
+
+  <!-- ===== Loader ===== -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <svg class="mark mark--build" viewBox="-240 -240 480 480">
+      <g transform="rotate(-37)">
+        <rect class="pc pc1" x="-120" y="-170" width="105" height="100"/>
+        <g class="pc pc2">
+          <rect x="3" y="-170" width="30" height="100"/><rect x="3" y="-170" width="210" height="16"/>
+          <rect x="3" y="-142" width="190" height="14"/><rect x="3" y="-113" width="200" height="14"/>
+          <rect x="3" y="-84" width="210" height="14"/>
+        </g>
+        <g class="pc pc3">
+          <rect x="-215" y="-52" width="205" height="18"/><rect x="-215" y="-11" width="205" height="18"/>
+          <rect x="-215" y="30" width="205" height="18"/>
+        </g>
+        <rect class="pc pc4 y" x="8" y="-52" width="160" height="100"/>
+        <rect class="pc pc5 y" x="-120" y="66" width="160" height="100"/>
+        <rect class="pc pc6" x="58" y="66" width="110" height="100"/>
+      </g>
+    </svg>
+    <div class="loader__bar"><span id="loaderBar"></span></div>
+    <div class="loader__pct"><span id="loaderPct">0</span>%</div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- ===== Header ===== -->
+  <header class="header" id="header">
+    <a href="#top" class="brand" aria-label="Σαράντης — αρχική">
+      <img src="assets/mark.svg" alt="" class="brand__mark" width="44" height="44">
+      <span class="brand__text"><strong>ΣΑΡΑΝΤΗΣ</strong><small>ΟΙΚΟΔΟΜΙΚΑ ΥΛΙΚΑ</small></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Κύριο μενού">
+      <a href="#about" class="nav__link"><span>Η Εταιρεία</span></a>
+      <a href="#products" class="nav__link"><span>Προϊόντα</span></a>
+      <a href="#services" class="nav__link"><span>Υπηρεσίες</span></a>
+      <a href="#contact" class="nav__link"><span>Επικοινωνία</span></a>
+      <a href="#contact" class="btn btn--yellow btn--sm magnetic nav__cta">Ζητήστε προσφορά</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Άνοιγμα μενού" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main id="top">
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="hero">
+      <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+      <div class="hero__grid" aria-hidden="true"></div>
+      <div class="hero__glow" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <div class="hero__mark-wrap" id="heroMark">
+          <svg class="mark mark--hero" viewBox="-240 -240 480 480" aria-hidden="true">
+            <g transform="rotate(-37)">
+              <rect class="pc pc1" x="-120" y="-170" width="105" height="100"/>
+              <g class="pc pc2">
+                <rect x="3" y="-170" width="30" height="100"/><rect x="3" y="-170" width="210" height="16"/>
+                <rect x="3" y="-142" width="190" height="14"/><rect x="3" y="-113" width="200" height="14"/>
+                <rect x="3" y="-84" width="210" height="14"/>
+              </g>
+              <g class="pc pc3">
+                <rect x="-215" y="-52" width="205" height="18"/><rect x="-215" y="-11" width="205" height="18"/>
+                <rect x="-215" y="30" width="205" height="18"/>
+              </g>
+              <rect class="pc pc4 y" x="8" y="-52" width="160" height="100"/>
+              <rect class="pc pc5 y" x="-120" y="66" width="160" height="100"/>
+              <rect class="pc pc6" x="58" y="66" width="110" height="100"/>
+            </g>
+          </svg>
+        </div>
+
+        <p class="hero__est reveal-up">EST. 2007</p>
+        <h1 class="hero__title" aria-label="Σαράντης">
+          <span class="split" data-split>ΣΑΡΑΝΤΗΣ</span>
+        </h1>
+        <p class="hero__sub"><span class="split split--thin" data-split>ΟΙΚΟΔΟΜΙΚΑ ΥΛΙΚΑ</span></p>
+        <p class="hero__tag reveal-up">Ό,τι χρειάζεται το έργο σας, <em>κάτω από μία στέγη.</em></p>
+        <div class="hero__ctas reveal-up">
+          <a href="#products" class="btn btn--yellow magnetic"><span>Δείτε τα προϊόντα</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a href="#contact" class="btn btn--ghost magnetic"><span>Επικοινωνία</span></a>
+        </div>
+      </div>
+
+      <a href="#about" class="scroll-hint" aria-label="Κύλιση προς τα κάτω">
+        <span class="scroll-hint__mouse"><span></span></span>
+        <span class="scroll-hint__txt">SCROLL</span>
+      </a>
+      <div class="hero__stripe" aria-hidden="true"></div>
+    </section>
+
+    <!-- ===== Marquee ===== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>ΤΣΙΜΕΝΤΑ</span><i></i><span>ΧΡΩΜΑΤΑ</span><i></i><span>ΜΟΝΩΤΙΚΑ</span><i></i><span>ΠΛΕΓΜΑΤΑ</span><i></i>
+        <span>ΕΡΓΑΛΕΙΑ</span><i></i><span>ΚΟΛΛΕΣ</span><i></i><span>ΣΙΔΗΡΟΣ</span><i></i><span>ΥΔΡΑΥΛΙΚΑ</span><i></i>
+        <span>ΤΣΙΜΕΝΤΑ</span><i></i><span>ΧΡΩΜΑΤΑ</span><i></i><span>ΜΟΝΩΤΙΚΑ</span><i></i><span>ΠΛΕΓΜΑΤΑ</span><i></i>
+        <span>ΕΡΓΑΛΕΙΑ</span><i></i><span>ΚΟΛΛΕΣ</span><i></i><span>ΣΙΔΗΡΟΣ</span><i></i><span>ΥΔΡΑΥΛΙΚΑ</span><i></i>
+      </div>
+    </div>
+
+    <!-- ===== About ===== -->
+    <section class="section about" id="about">
+      <div class="container about__grid">
+        <div class="about__media reveal-mask">
+          <div class="about__img parallax" data-speed="0.12">
+            <img src="assets/storefront.jpg" srcset="assets/storefront-sm.jpg 900w, assets/storefront.jpg 2200w"
+                 sizes="(max-width: 900px) 100vw, 55vw" alt="Το κατάστημα Σαράντης Οικοδομικά Υλικά" loading="lazy">
+          </div>
+          <div class="about__badge">
+            <span class="about__badge-num" data-count-since="2007">0</span>
+            <span class="about__badge-txt">χρόνια<br>δίπλα σας</span>
+          </div>
+        </div>
+
+        <div class="about__text">
+          <p class="eyebrow reveal-up">Η Εταιρεία</p>
+          <h2 class="h2 reveal-up">Χτίζουμε <span class="hl">εμπιστοσύνη</span> από το 2007.</h2>
+          <p class="lead reveal-up">Από το 2007, η <strong>Σαράντης Οικοδομικά Υλικά</strong> στέκεται δίπλα σε επαγγελματίες,
+            εργολάβους και ιδιώτες με ποιοτικά υλικά, σωστή τιμή και τη συμβουλή που κάνει τη διαφορά.</p>
+          <p class="reveal-up">Στο σύγχρονο κατάστημά μας θα βρείτε ό,τι χρειάζεστε για κάθε φάση του έργου — από τα θεμέλια
+            μέχρι το τελευταίο χέρι βαφής. Επώνυμα brands, μεγάλο απόθεμα και ανθρώπους που ξέρουν τη δουλειά.</p>
+
+          <ul class="stats">
+            <li class="stat reveal-up"><span class="stat__num"><span data-count-since="2007">0</span>+</span><span class="stat__lbl">Χρόνια εμπειρίας</span></li>
+            <li class="stat reveal-up"><span class="stat__num"><span data-count="8">0</span></span><span class="stat__lbl">Κατηγορίες προϊόντων</span></li>
+            <li class="stat reveal-up"><span class="stat__num"><span data-count="100">0</span>%</span><span class="stat__lbl">Αφοσίωση στον πελάτη</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Products ===== -->
+    <section class="section products" id="products">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow reveal-up">Προϊόντα</p>
+          <h2 class="h2 reveal-up">Όλα τα υλικά.<br><span class="outline">Ένας προορισμός.</span></h2>
+        </div>
+
+        <div class="cards">
+          <article class="card tilt reveal-up">
+            <div class="card__num">01</div>
+            <svg class="card__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 22l18-8 18 8v26l-18 8-18-8z"/><path d="M14 22l18 8 18-8M32 30v26"/><path d="M23 18l18 8"/></svg>
+            <h3>Τσιμέντα &amp; Κονιάματα</h3>
+            <p>Τσιμέντα, έτοιμα κονιάματα, σοβάδες και ενισχυτικά για κάθε εφαρμογή.</p>
+            <span class="card__line"></span>
+          </article>
+          <article class="card tilt reveal-up">
+            <div class="card__num">02</div>
+            <svg class="card__icon" viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="10" width="36" height="16" rx="3"/><path d="M46 18h6v14H30v8"/><rect x="26" y="40" width="8" height="16" rx="2"/></svg>
+            <h3>Χρώματα &amp; Βερνίκια</h3>
+            <p>Πλαστικά, ακρυλικά, βερνίκια, αστάρια και αξεσουάρ βαφής.</p>
+            <span class="card__line"></span>
+          </article>
+          <article class="card tilt reveal-up">
+            <div class="card__num">03</div>
+            <svg class="card__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 30L32 12l24 18"/><path d="M14 26v26h36V26"/><path d="M14 36h36M14 44h36"/></svg>
+            <h3>Μονωτικά &amp; Στεγανωτικά</h3>
+            <p>Θερμομόνωση, υγρομόνωση, μεμβράνες και στεγανωτικά δωμάτων.</p>
+            <span class="card__line"></span>
+          </article>
+          <article class="card tilt reveal-up">
+            <div class="card__num">04</div>
+            <svg class="card__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 10h44v44H10z"/><path d="M10 21h44M10 32h44M10 43h44M21 10v44M32 10v44M43 10v44"/></svg>
+            <h3>Πλέγματα &amp; Δίχτυα</h3>
+            <p>Πλέγματα σοβά, σκίασης, περίφραξης και δίχτυα για κάθε χρήση.</p>
+            <span class="card__line"></span>
+          </article>
+          <article class="card tilt reveal-up">
+            <div class="card__num">05</div>
+            <svg class="card__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M38 10a10 10 0 0 0-9 14L10 43l7 7 19-19a10 10 0 0 0 14-9l-6 4-6-2-2-6z"/></svg>
+            <h3>Εργαλεία</h3>
+            <p>Χειρός και ηλεκτρικά εργαλεία, αναλώσιμα και είδη ασφαλείας.</p>
+            <span class="card__line"></span>
+          </article>
+          <article class="card tilt reveal-up">
+            <div class="card__num">06</div>
+            <svg class="card__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 14h44M10 50h44M24 14v36M40 14v36"/><path d="M16 14v-4h32v4M16 50v4h32v-4"/></svg>
+            <h3>Σίδηρος &amp; Δομικά</h3>
+            <p>Οπλισμοί, δοκοί, προφίλ και δομικά στοιχεία για γερές κατασκευές.</p>
+            <span class="card__line"></span>
+          </article>
+          <article class="card tilt reveal-up">
+            <div class="card__num">07</div>
+            <svg class="card__icon" viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="10" width="20" height="20"/><rect x="34" y="10" width="20" height="20"/><rect x="10" y="34" width="20" height="20"/><rect x="34" y="34" width="20" height="20"/></svg>
+            <h3>Πλακίδια &amp; Κόλλες</h3>
+            <p>Κόλλες πλακιδίων, αρμόστοκοι, σιλικόνες και αφρός πολυουρεθάνης.</p>
+            <span class="card__line"></span>
+          </article>
+          <article class="card tilt reveal-up">
+            <div class="card__num">08</div>
+            <svg class="card__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 24h20v-8h14v8h4a10 10 0 0 1 10 10v6H44v-4h-2v4H28v-8H8z"/><path d="M50 46c0 4 3 6 3 8a3 3 0 0 1-6 0c0-2 3-4 3-8z"/></svg>
+            <h3>Υδραυλικά</h3>
+            <p>Σωλήνες, εξαρτήματα, φρεάτια και υλικά αποχέτευσης.</p>
+            <span class="card__line"></span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Services ===== -->
+    <section class="section services" id="services">
+      <div class="services__bg" aria-hidden="true"><span>ΣΑΡΑΝΤΗΣ</span></div>
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow reveal-up">Υπηρεσίες</p>
+          <h2 class="h2 reveal-up">Δεν πουλάμε απλώς υλικά.<br><span class="hl">Στηρίζουμε έργα.</span></h2>
+        </div>
+
+        <ol class="steps">
+          <li class="step reveal-up">
+            <span class="step__n">01</span>
+            <div><h3>Τεχνική συμβουλή</h3><p>Σας βοηθάμε να διαλέξετε το σωστό υλικό για την κάθε εφαρμογή — χωρίς περιττά έξοδα.</p></div>
+          </li>
+          <li class="step reveal-up">
+            <span class="step__n">02</span>
+            <div><h3>Προσφορές για έργα</h3><p>Κοστολόγηση και ειδικές τιμές για επαγγελματίες, εργολάβους και μεγάλες ποσότητες.</p></div>
+          </li>
+          <li class="step reveal-up">
+            <span class="step__n">03</span>
+            <div><h3>Μεταφορά υλικών</h3><p>Τα υλικά σας φτάνουν εκεί που τα χρειάζεστε, την ώρα που τα χρειάζεστε.</p></div>
+          </li>
+          <li class="step reveal-up">
+            <span class="step__n">04</span>
+            <div><h3>Επώνυμα brands</h3><p>Συνεργαζόμαστε με αξιόπιστους κατασκευαστές για ποιότητα που διαρκεί.</p></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== CTA band ===== -->
+    <section class="cta">
+      <div class="cta__stripes" aria-hidden="true"></div>
+      <div class="container cta__inner">
+        <h2 class="cta__title reveal-up">Έχετε έργο;<br>Ας το χτίσουμε μαζί.</h2>
+        <a href="#contact" class="btn btn--dark magnetic reveal-up"><span>Ζητήστε προσφορά</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section class="section contact" id="contact">
+      <div class="container contact__grid">
+        <div>
+          <p class="eyebrow reveal-up">Επικοινωνία</p>
+          <h2 class="h2 reveal-up">Ελάτε να <span class="hl">μας γνωρίσετε.</span></h2>
+
+          <ul class="info">
+            <li class="info__item reveal-up">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              <div><span class="info__lbl">Διεύθυνση</span><span class="info__val">[Οδός &amp; αριθμός], [Πόλη] [Τ.Κ.]</span></div>
+            </li>
+            <li class="info__item reveal-up">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+              <div><span class="info__lbl">Τηλέφωνο</span><a class="info__val" href="tel:+300000000000">[+30 000 000 0000]</a></div>
+            </li>
+            <li class="info__item reveal-up">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+              <div><span class="info__lbl">Email</span><a class="info__val" href="mailto:info@example.com">[info@example.com]</a></div>
+            </li>
+            <li class="info__item reveal-up">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <div><span class="info__lbl">Ωράριο</span><span class="info__val">Δευ–Παρ [07:30–15:30] · Σάβ [08:00–14:00]</span></div>
+            </li>
+          </ul>
+        </div>
+
+        <form class="form reveal-up" id="contactForm" novalidate>
+          <h3 class="form__title">Στείλτε μας μήνυμα</h3>
+          <div class="field"><input id="f-name" name="name" type="text" placeholder=" " required><label for="f-name">Ονοματεπώνυμο</label></div>
+          <div class="field"><input id="f-phone" name="phone" type="tel" placeholder=" " required><label for="f-phone">Τηλέφωνο</label></div>
+          <div class="field"><input id="f-email" name="email" type="email" placeholder=" "><label for="f-email">Email</label></div>
+          <div class="field"><textarea id="f-msg" name="message" rows="4" placeholder=" " required></textarea><label for="f-msg">Τι χρειάζεστε;</label></div>
+          <button type="submit" class="btn btn--yellow btn--block magnetic"><span>Αποστολή</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <p class="form__note" id="formNote" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#top" class="brand">
+        <img src="assets/mark.svg" alt="" class="brand__mark" width="44" height="44">
+        <span class="brand__text"><strong>ΣΑΡΑΝΤΗΣ</strong><small>ΟΙΚΟΔΟΜΙΚΑ ΥΛΙΚΑ</small></span>
+      </a>
+      <nav class="footer__nav" aria-label="Μενού υποσέλιδου">
+        <a href="#about">Η Εταιρεία</a><a href="#products">Προϊόντα</a><a href="#services">Υπηρεσίες</a><a href="#contact">Επικοινωνία</a>
+      </nav>
+      <p class="footer__copy">© <span id="year">2026</span> Σαράντης Οικοδομικά Υλικά · EST. 2007</p>
+    </div>
+    <button class="to-top magnetic" id="toTop" aria-label="Επιστροφή στην κορυφή">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+    </button>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

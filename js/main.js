@@ -250,6 +250,10 @@
     const ctx = canvas.getContext("2d");
     let w, h, dpr, parts = [];
     const pointer = { x: -9999, y: -9999 };
+    let particleRGB = "255,255,255";
+    const readParticle = () => { particleRGB = getComputedStyle(document.documentElement).getPropertyValue("--particle").trim() || "255,255,255"; };
+    readParticle();
+    document.addEventListener("themechange", readParticle);
 
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -270,7 +274,7 @@
         rot: Math.random() * Math.PI,
         vr: (Math.random() - 0.5) * 0.01,
         a: 0.15 + Math.random() * 0.5,
-        c: yellow ? "255,214,10" : "255,255,255",
+        c: yellow ? "255,214,10" : null,
       };
     }
     function draw() {
@@ -286,7 +290,7 @@
         ctx.save();
         ctx.translate(p.x, p.y);
         ctx.rotate(p.rot);
-        ctx.fillStyle = `rgba(${p.c},${p.a * fade})`;
+        ctx.fillStyle = `rgba(${p.c || particleRGB},${p.a * fade})`;
         ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s);
         ctx.restore();
       }
@@ -297,7 +301,7 @@
           const a = parts[i], b = parts[j];
           const dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
           if (d2 < 9000) {
-            ctx.strokeStyle = `rgba(255,255,255,${0.06 * (1 - d2 / 9000)})`;
+            ctx.strokeStyle = `rgba(${particleRGB},${0.08 * (1 - d2 / 9000)})`;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           }
         }
@@ -368,6 +372,40 @@
     window.addEventListener("scroll", showDock, { passive: true });
     showDock();
   }
+
+  /* ---------- Light / dark theme ---------- */
+  const root = document.documentElement;
+  const themeBtn = $("#themeToggle");
+  const metaTheme = $('meta[name="theme-color"]');
+  function syncThemeUI() {
+    const light = root.dataset.theme === "light";
+    themeBtn.setAttribute("aria-label", light ? "Εναλλαγή σε σκούρο θέμα" : "Εναλλαγή σε φωτεινό θέμα");
+    themeBtn.setAttribute("aria-pressed", String(light));
+    if (metaTheme) metaTheme.setAttribute("content", light ? "#f3f2ee" : "#0a0a0a");
+  }
+  function applyTheme(next) {
+    root.dataset.theme = next;
+    try { localStorage.setItem("theme", next); } catch (e) {}
+    syncThemeUI();
+    document.dispatchEvent(new Event("themechange"));
+  }
+  syncThemeUI();
+  themeBtn.addEventListener("click", () => {
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    themeBtn.classList.remove("is-spin"); void themeBtn.offsetWidth; themeBtn.classList.add("is-spin");
+    if (document.startViewTransition && !reduceMotion) {
+      const r = themeBtn.getBoundingClientRect();
+      const x = r.left + r.width / 2, y = r.top + r.height / 2;
+      root.style.setProperty("--tx", x + "px");
+      root.style.setProperty("--ty", y + "px");
+      root.style.setProperty("--tr", Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + "px");
+      document.startViewTransition(() => applyTheme(next));
+    } else {
+      root.classList.add("theme-anim");
+      applyTheme(next);
+      setTimeout(() => root.classList.remove("theme-anim"), 600);
+    }
+  });
 
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();

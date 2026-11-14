@@ -840,19 +840,6 @@ a.info__val:hover { color: var(--yellow); }
 .hero .btn--ghost:hover { border-color: var(--white); }
 .scroll-hint__mouse { border-color: var(--hero-ink); }
 
-.video-toggle {
-  position: absolute; right: var(--gutter); bottom: 34px; z-index: 3;
-  width: 44px; height: 44px; padding: 0; border-radius: 50%;
-  display: grid; place-items: center; cursor: pointer;
-  background: var(--black); color: var(--white); border: 1.5px solid var(--grey-800);
-  transition: transform .3s var(--ease), border-color .3s;
-}
-.video-toggle:hover { border-color: var(--yellow); transform: scale(1.08); }
-.video-toggle svg { width: 18px; height: 18px; fill: currentColor; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
-.video-toggle__play { display: none; }
-.video-toggle.is-paused .video-toggle__play { display: block; }
-.video-toggle.is-paused .video-toggle__pause { display: none; }
-@media (max-width: 560px) { .video-toggle { bottom: 22px; width: 40px; height: 40px; } }
 
 /* ---------- Section background photos ---------- */
 .has-bg { position: relative; overflow: hidden; overflow: clip; isolation: isolate; }

@@ -92,6 +92,19 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-dot" id="cursorDot"></div>
 
+  <!-- ===== Background sound ===== -->
+  <audio id="siteAudio" src="assets/audio/sarantis.mp3" loop preload="auto"></audio>
+  <button class="sound-toggle ripple" id="soundToggle" type="button" aria-pressed="false" aria-label="Ενεργοποίηση ήχου">
+    <svg class="sound-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path class="st-speaker" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>
+      <path class="st-wave st-wave--1" d="M15.2 9.2a4 4 0 0 1 0 5.6"/>
+      <path class="st-wave st-wave--2" d="M17.8 6.7a7.6 7.6 0 0 1 0 10.6"/>
+      <path class="st-x" d="M16 9.5l5 5M21 9.5l-5 5"/>
+    </svg>
+    <span class="sound-toggle__eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span class="sound-toggle__hint">Ήχος</span>
+  </button>
+
   <!-- ===== Header ===== -->
   <header class="header" id="header">
     <a href="#top" class="brand" aria-label="Σαράντης — αρχική">

@@ -591,6 +591,67 @@
     document.addEventListener("visibilitychange", () => { if (!document.hidden) updateHours(); });
   }
 
+  /* ---------- Background sound with speaker toggle ---------- */
+  const audio = $("#siteAudio");
+  const sBtn = $("#soundToggle");
+  if (audio && sBtn) {
+    const VOL = 0.6;
+    let wantOn = true;
+    try { wantOn = localStorage.getItem("sound") !== "off"; } catch (e) {}
+    let fadeRaf = null;
+    const fadeTo = (target, ms, done) => {
+      cancelAnimationFrame(fadeRaf);
+      const from = audio.volume, t0 = performance.now();
+      const step = (t) => {
+        const k = Math.min((t - t0) / ms, 1);
+        audio.volume = from + (target - from) * k;
+        if (k < 1) fadeRaf = requestAnimationFrame(step); else if (done) done();
+      };
+      fadeRaf = requestAnimationFrame(step);
+    };
+    const setUI = () => {
+      const on = !audio.paused;
+      sBtn.classList.toggle("is-on", on);
+      sBtn.classList.toggle("is-waiting", !on && wantOn);
+      sBtn.setAttribute("aria-pressed", String(on));
+      sBtn.setAttribute("aria-label", on ? "Απενεργοποίηση ήχου" : "Ενεργοποίηση ήχου");
+      sBtn.classList.remove("is-flip"); void sBtn.offsetWidth; sBtn.classList.add("is-flip");
+    };
+    const start = () => {
+      audio.volume = 0;
+      const pr = audio.play();
+      if (pr && pr.then) pr.then(() => fadeTo(VOL, 1500)).catch(() => {});
+      else fadeTo(VOL, 1500);
+    };
+    const stop = () => fadeTo(0, 400, () => audio.pause());
+    audio.addEventListener("play", setUI);
+    audio.addEventListener("pause", setUI);
+
+    sBtn.addEventListener("click", () => {
+      if (audio.paused) { wantOn = true; start(); }
+      else { wantOn = false; stop(); }
+      try { localStorage.setItem("sound", wantOn ? "on" : "off"); } catch (e) {}
+      setUI();
+    });
+
+    // Browsers block sound until the visitor interacts: try now, otherwise start on the first tap/click/key.
+    const firstTouch = (e) => {
+      if (e.target.closest && e.target.closest("#soundToggle")) return;
+      ["pointerdown", "keydown", "touchend"].forEach((ev) => window.removeEventListener(ev, firstTouch, true));
+      if (wantOn && audio.paused) start();
+    };
+    if (wantOn) {
+      start();
+      ["pointerdown", "keydown", "touchend"].forEach((ev) => window.addEventListener(ev, firstTouch, true));
+    }
+    // pause when the tab is in the background, resume when back
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) { if (!audio.paused) { audio.pause(); audio.dataset.resume = "1"; } }
+      else if (audio.dataset.resume) { delete audio.dataset.resume; if (wantOn) start(); }
+    });
+    setUI();
+  }
+
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();
 })();

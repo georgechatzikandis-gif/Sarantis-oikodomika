@@ -673,6 +673,34 @@
     else target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
   });
 
+  /* ---------- Reviews: animated score ---------- */
+  const rvSum = $("#rvSummary");
+  if (rvSum) {
+    const scoreEl = $(".rv-summary__score", rvSum);
+    const target = parseFloat(scoreEl.dataset.score);
+    const rows = $(".rv-rows");
+    new IntersectionObserver((entries, obs) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("is-in");
+        if (e.target === rvSum) {
+          if (reduceMotion) { scoreEl.textContent = target.toFixed(1); }
+          else {
+            const t0 = performance.now();
+            const tick = (t) => {
+              const k = Math.min((t - t0) / 1600, 1);
+              scoreEl.textContent = (target * (1 - Math.pow(1 - k, 3))).toFixed(1);
+              if (k < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }
+        }
+        obs.unobserve(e.target);
+      });
+    }, { threshold: 0.3 }).observe(rvSum);
+    if (rows) new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { rows.classList.add("is-in"); obs.disconnect(); } }, { threshold: 0.2 }).observe(rows);
+  }
+
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();
 })();

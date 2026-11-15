@@ -652,6 +652,27 @@
     setUI();
   }
 
+  /* ---------- Always start at the top; menu links scroll without adding #… to the address ---------- */
+  const toTopNow = () => {
+    const prev = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+    document.documentElement.style.scrollBehavior = prev;
+  };
+  toTopNow();
+  window.addEventListener("load", toTopNow);
+  window.addEventListener("pageshow", (e) => { if (e.persisted) toTopNow(); });
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute("href");
+    const target = id === "#" || id === "#top" ? document.body : document.querySelector(id);
+    if (!target) return;
+    e.preventDefault();
+    if (target === document.body) window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    else target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  });
+
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();
 })();

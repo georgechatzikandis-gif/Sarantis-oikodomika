@@ -12,6 +12,9 @@
       var t = null;
       try { t = localStorage.getItem("theme"); } catch (e) {}
       document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");
+      // always open at the top on load / refresh
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      if (location.hash) history.replaceState(null, "", location.pathname + location.search);
     })();
   </script>
   <meta property="og:title" content="Σαράντης | Οικοδομικά Υλικά">

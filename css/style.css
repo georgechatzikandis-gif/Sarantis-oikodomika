@@ -1240,6 +1240,43 @@ a.info__val:hover { color: var(--yellow); }
   .f-bottom { flex-direction: column; align-items: flex-start; }
 }
 
+
+/* ---------- Language toggle (ΕΛ / EN) ---------- */
+.lang-toggle {
+  position: relative; flex: none;
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  width: 86px; height: 42px; padding: 3px; border-radius: 42px; cursor: pointer;
+  background: transparent; border: 1.5px solid var(--grey-800);
+  font: 800 12px/1 var(--font); letter-spacing: .08em;
+  transition: border-color .3s, transform .3s var(--ease);
+}
+.lang-toggle:hover { border-color: var(--yellow); }
+.lang-toggle:active { transform: scale(.94); }
+.lang-toggle__pill {
+  position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px);
+  border-radius: 40px; background: var(--yellow);
+  transition: transform .55s cubic-bezier(.68,-0.35,.27,1.35);
+  box-shadow: 0 4px 14px rgba(255,214,10,.35);
+}
+.lang-toggle[data-lang="en"] .lang-toggle__pill { transform: translateX(100%); }
+.lang-toggle__opt { position: relative; z-index: 1; text-align: center; color: var(--grey-400); transition: color .35s; }
+.lang-toggle[data-lang="el"] .lang-toggle__opt--el,
+.lang-toggle[data-lang="en"] .lang-toggle__opt--en { color: var(--onY); }
+@media (max-width: 900px) {
+  .lang-toggle { width: 76px; height: 40px; position: relative; z-index: 120; margin-left: auto; }
+  .lang-toggle + .theme-toggle { margin-left: 0; }
+}
+@media (max-width: 380px) {
+  .brand__text small { display: none; }
+}
+
+/* smooth text swap when changing language */
+body.lang-out main, body.lang-out .footer, body.lang-out .header .nav { opacity: 0; filter: blur(4px); transition: opacity .22s ease, filter .22s ease; }
+body.lang-in main, body.lang-in .footer, body.lang-in .header .nav { transition: opacity .45s ease, filter .45s ease; }
+
+/* "Today" label in the hours list */
+html[lang="en"] .hrow.is-today .hrow__day::after { content: "Today"; }
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; transition-delay: 0s !important; }
@@ -1360,3 +1397,6 @@ a.info__val:hover { color: var(--yellow); }
 
 [data-theme="light"] .outline { color: var(--grey-400); }
 [data-theme="light"] .has-bg .h2 { text-shadow: none; }
+
+.brand__text small { white-space: nowrap; }
+@media (max-width: 560px) { html[lang="en"] .brand__text small { font-size: 8.5px; letter-spacing: .14em; } }

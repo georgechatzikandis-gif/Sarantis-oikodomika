@@ -9,10 +9,13 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const body = document.body;
+  const T = (gr) => (window.I18N ? window.I18N.t(gr) : gr);
+  const isEN = () => document.documentElement.lang === "en";
 
   /* ---------- Split text into letters ---------- */
   $$("[data-split]").forEach((el) => {
     const text = el.textContent;
+    el.dataset.orig = text;
     el.textContent = "";
     el.setAttribute("aria-hidden", "true");
     [...text].forEach((ch, i) => {
@@ -177,7 +180,7 @@
   function setMenu(open) {
     nav.classList.toggle("is-open", open);
     burger.setAttribute("aria-expanded", String(open));
-    burger.setAttribute("aria-label", open ? "Κλείσιμο μενού" : "Άνοιγμα μενού");
+    burger.setAttribute("aria-label", T(open ? "Κλείσιμο μενού" : "Άνοιγμα μενού"));
     body.style.overflow = open ? "hidden" : "";
     if (open) header.classList.remove("is-hidden");
   }
@@ -336,13 +339,13 @@
       f.parentElement.classList.toggle("is-invalid", bad);
       if (bad) ok = false;
     });
-    if (!ok) { note.textContent = "Συμπληρώστε τα υποχρεωτικά πεδία."; return; }
+    if (!ok) { note.textContent = T("Συμπληρώστε τα υποχρεωτικά πεδία."); return; }
     const data = new FormData(form);
     const to = ($(".act--mail") || {}).getAttribute?.("href")?.replace("mailto:", "") || "";
     const subject = `Αίτημα από ${data.get("name")}`;
     const bodyTxt = `Όνομα: ${data.get("name")}\nΤηλέφωνο: ${data.get("phone")}\nEmail: ${data.get("email")}\n\n${data.get("message")}`;
     window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyTxt)}`;
-    note.textContent = "Ευχαριστούμε! Ανοίγει η εφαρμογή email για να στείλετε το μήνυμα.";
+    note.textContent = T("Ευχαριστούμε! Ανοίγει η εφαρμογή email για να στείλετε το μήνυμα.");
     form.reset();
   });
   $$("input, textarea", form).forEach((f) => f.addEventListener("input", () => f.parentElement.classList.remove("is-invalid")));
@@ -380,7 +383,7 @@
   const metaTheme = $('meta[name="theme-color"]');
   function syncThemeUI() {
     const light = root.dataset.theme === "light";
-    themeBtn.setAttribute("aria-label", light ? "Εναλλαγή σε σκούρο θέμα" : "Εναλλαγή σε φωτεινό θέμα");
+    themeBtn.setAttribute("aria-label", T(light ? "Εναλλαγή σε σκούρο θέμα" : "Εναλλαγή σε φωτεινό θέμα"));
     themeBtn.setAttribute("aria-pressed", String(light));
     if (metaTheme) metaTheme.setAttribute("content", light ? "#f3f2ee" : "#0a0a0a");
   }
@@ -391,6 +394,7 @@
     document.dispatchEvent(new Event("themechange"));
   }
   syncThemeUI();
+  document.addEventListener("langchange", syncThemeUI);
   themeBtn.addEventListener("click", () => {
     const next = root.dataset.theme === "light" ? "dark" : "light";
     themeBtn.classList.remove("is-spin"); void themeBtn.offsetWidth; themeBtn.classList.add("is-spin");
@@ -537,6 +541,11 @@
     const fmt = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
     const dur = (m) => {
       const h = Math.floor(m / 60), mm = m % 60;
+      if (isEN()) {
+        const hs = h ? `${h} ${h === 1 ? "hour" : "hours"}` : "";
+        const ms = mm ? `${mm} min` : "";
+        return hs && ms ? `${hs} ${ms}` : hs || ms;
+      }
       if (h && mm) return `${h} ${h === 1 ? "ώρα" : "ώρες"} και ${mm}′`;
       if (h) return `${h} ${h === 1 ? "ώρα" : "ώρες"}`;
       return `${mm}′`;
@@ -560,24 +569,24 @@
       $$("[data-open-chip]").forEach((chip) => {
         chip.classList.toggle("is-open", open);
         chip.classList.toggle("is-closed", !open);
-        chip.querySelector("span").textContent = open ? "Ανοιχτά τώρα" : "Κλειστά τώρα";
+        chip.querySelector("span").textContent = T(open ? "Ανοιχτά τώρα" : "Κλειστά τώρα");
       });
-      const label = open ? "Ανοιχτά τώρα" : "Κλειστά τώρα";
-      if (lastState !== open) {
+      const label = T(open ? "Ανοιχτά τώρα" : "Κλειστά τώρα");
+      if (lastState !== open || statusTxt.textContent !== label) {
         statusTxt.textContent = label;
         statusEl.classList.remove("is-flip"); void statusEl.offsetWidth; statusEl.classList.add("is-flip");
         lastState = open;
       }
 
       if (open) {
-        note.innerHTML = `Κλείνει σε <b>${dur(t.c - min)}</b> (στις ${fmt(t.c)})`;
+        note.innerHTML = isEN() ? `Closes in <b>${dur(t.c - min)}</b> (at ${fmt(t.c)})` : `Κλείνει σε <b>${dur(t.c - min)}</b> (στις ${fmt(t.c)})`;
       } else if (t && min < t.o) {
-        note.innerHTML = `Ανοίγει σήμερα σε <b>${dur(t.o - min)}</b> (στις ${fmt(t.o)})`;
+        note.innerHTML = isEN() ? `Opens today in <b>${dur(t.o - min)}</b> (at ${fmt(t.o)})` : `Ανοίγει σήμερα σε <b>${dur(t.o - min)}</b> (στις ${fmt(t.o)})`;
       } else {
         let d = day, k = 0;
         do { d = d % 7 + 1; k++; } while (!sched[d] && k < 7);
-        const when = k === 1 ? "αύριο" : DAY_GEN[d];
-        note.innerHTML = `Ανοίγει <b>${when}</b> στις ${fmt(sched[d].o)}`;
+        const when = k === 1 ? (isEN() ? "tomorrow" : "αύριο") : T(DAY_GEN[d]);
+        note.innerHTML = isEN() ? `Opens <b>${when}</b> at ${fmt(sched[d].o)}` : `Ανοίγει <b>${when}</b> στις ${fmt(sched[d].o)}`;
       }
 
       rows.forEach((r) => {
@@ -593,6 +602,7 @@
     }
     updateHours();
     setInterval(updateHours, 30000);
+    document.addEventListener("langchange", updateHours);
     document.addEventListener("visibilitychange", () => { if (!document.hidden) updateHours(); });
   }
 
@@ -619,7 +629,7 @@
       sBtn.classList.toggle("is-on", on);
       sBtn.classList.toggle("is-waiting", !on && wantOn);
       sBtn.setAttribute("aria-pressed", String(on));
-      sBtn.setAttribute("aria-label", on ? "Απενεργοποίηση ήχου" : "Ενεργοποίηση ήχου");
+      sBtn.setAttribute("aria-label", T(on ? "Απενεργοποίηση ήχου" : "Ενεργοποίηση ήχου"));
       sBtn.classList.remove("is-flip"); void sBtn.offsetWidth; sBtn.classList.add("is-flip");
     };
     const start = () => {
@@ -631,6 +641,7 @@
     const stop = () => fadeTo(0, 400, () => audio.pause());
     audio.addEventListener("play", setUI);
     audio.addEventListener("pause", setUI);
+    document.addEventListener("langchange", setUI);
 
     sBtn.addEventListener("click", () => {
       if (audio.paused) { wantOn = true; start(); }
@@ -712,4 +723,7 @@
 
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();
+
+  /* ---------- Language (Greek / English) ---------- */
+  if (window.I18N) window.I18N.init();
 })();

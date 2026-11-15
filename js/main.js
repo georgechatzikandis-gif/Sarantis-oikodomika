@@ -557,6 +557,11 @@
 
       hoursCard.classList.toggle("is-open", open);
       hoursCard.classList.toggle("is-closed", !open);
+      $$("[data-open-chip]").forEach((chip) => {
+        chip.classList.toggle("is-open", open);
+        chip.classList.toggle("is-closed", !open);
+        chip.querySelector("span").textContent = open ? "Ανοιχτά τώρα" : "Κλειστά τώρα";
+      });
       const label = open ? "Ανοιχτά τώρα" : "Κλειστά τώρα";
       if (lastState !== open) {
         statusTxt.textContent = label;
@@ -700,6 +705,10 @@
     }, { threshold: 0.3 }).observe(rvSum);
     if (rows) new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { rows.classList.add("is-in"); obs.disconnect(); } }, { threshold: 0.2 }).observe(rows);
   }
+
+  /* ---------- Footer reveal ---------- */
+  const footerEl = $(".footer");
+  if (footerEl) new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { footerEl.classList.add("is-in"); obs.disconnect(); } }, { threshold: 0.08 }).observe(footerEl);
 
   /* ---------- Year ---------- */
   $("#year").textContent = new Date().getFullYear();

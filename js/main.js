@@ -624,46 +624,64 @@
       };
       fadeRaf = requestAnimationFrame(step);
     };
+    const isOn = () => !audio.paused && !audio.muted;
     const setUI = () => {
-      const on = !audio.paused;
+      const on = isOn();
       sBtn.classList.toggle("is-on", on);
       sBtn.classList.toggle("is-waiting", !on && wantOn);
       sBtn.setAttribute("aria-pressed", String(on));
       sBtn.setAttribute("aria-label", T(on ? "Απενεργοποίηση ήχου" : "Ενεργοποίηση ήχου"));
       sBtn.classList.remove("is-flip"); void sBtn.offsetWidth; sBtn.classList.add("is-flip");
     };
-    const start = () => {
-      audio.volume = 0;
+    const GESTURES = ["pointerdown", "pointerup", "touchstart", "touchend", "click", "keydown"];
+    const unlisten = () => GESTURES.forEach((ev) => window.removeEventListener(ev, onGesture, true));
+
+    // Try to play with sound. Browsers only allow it right away for some visitors;
+    // otherwise we keep it playing silently (allowed everywhere) so it is loaded and
+    // ready, and switch the sound on at the very first tap / click / key press.
+    const play = (fromGesture) => {
+      const wasSilent = audio.muted;
+      audio.muted = false;
+      try { audio.volume = VOL; } catch (e) {}
+      if (wasSilent && fromGesture) audio.currentTime = 0;   // start the song from the beginning
       const pr = audio.play();
-      if (pr && pr.then) pr.then(() => fadeTo(VOL, 1500)).catch(() => {});
-      else fadeTo(VOL, 1500);
+      const ok = () => { unlisten(); setUI(); };
+      const fail = () => {
+        if (fromGesture) return;
+        audio.muted = true;                                  // silent pre-roll
+        const p2 = audio.play(); if (p2 && p2.catch) p2.catch(() => {});
+        setUI();
+      };
+      if (pr && pr.then) pr.then(ok, fail); else ok();
     };
-    const stop = () => fadeTo(0, 400, () => audio.pause());
+    function onGesture(e) {
+      if (e.target && e.target.closest && e.target.closest("#soundToggle")) return;
+      if (!wantOn) { unlisten(); return; }
+      if (!isOn()) play(true);
+    }
+    const stop = () => {
+      fadeTo(0, 250, () => { audio.pause(); audio.muted = false; try { audio.volume = VOL; } catch (e) {} setUI(); });
+    };
     audio.addEventListener("play", setUI);
     audio.addEventListener("pause", setUI);
+    audio.addEventListener("volumechange", () => sBtn.classList.toggle("is-on", isOn()));
     document.addEventListener("langchange", setUI);
 
     sBtn.addEventListener("click", () => {
-      if (audio.paused) { wantOn = true; start(); }
-      else { wantOn = false; stop(); }
+      if (!isOn()) { wantOn = true; play(true); }
+      else { wantOn = false; unlisten(); stop(); }
       try { localStorage.setItem("sound", wantOn ? "on" : "off"); } catch (e) {}
       setUI();
     });
 
-    // Browsers block sound until the visitor interacts: try now, otherwise start on the first tap/click/key.
-    const firstTouch = (e) => {
-      if (e.target.closest && e.target.closest("#soundToggle")) return;
-      ["pointerdown", "keydown", "touchend"].forEach((ev) => window.removeEventListener(ev, firstTouch, true));
-      if (wantOn && audio.paused) start();
-    };
     if (wantOn) {
-      start();
-      ["pointerdown", "keydown", "touchend"].forEach((ev) => window.addEventListener(ev, firstTouch, true));
+      GESTURES.forEach((ev) => window.addEventListener(ev, onGesture, { capture: true, passive: true }));
+      play(false);
     }
     // pause when the tab is in the background, resume when back
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) { if (!audio.paused) { audio.pause(); audio.dataset.resume = "1"; } }
-      else if (audio.dataset.resume) { delete audio.dataset.resume; if (wantOn) start(); }
+      else if (audio.dataset.resume) { delete audio.dataset.resume; if (wantOn) { const r = audio.play(); if (r && r.catch) r.catch(() => {}); } }
     });
     setUI();
   }
